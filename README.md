@@ -85,7 +85,6 @@ There are mainly 2 ways of installing Perplexica - With Docker, Without Docker. 
 3. After cloning, navigate to the directory containing the project files.
 
 4. Rename the `sample.config.toml` file to `config.toml`. For Docker setups, you need only fill in the following fields:
-
    - `OPENAI`: Your OpenAI API key. **You only need to fill this if you wish to use OpenAI's models**.
    - `OLLAMA`: Your Ollama API URL. You should enter it as `http://host.docker.internal:PORT_NUMBER`. If you installed Ollama on port 11434, use `http://host.docker.internal:11434`. For other ports, adjust accordingly. **You need to fill this if you wish to use Ollama's models instead of OpenAI's**.
    - `GROQ`: Your Groq API key. **You only need to fill this if you wish to use Groq's hosted models**.
@@ -120,13 +119,22 @@ There are mainly 2 ways of installing Perplexica - With Docker, Without Docker. 
 
 See the [installation documentation](https://github.com/ItzCrazyKns/Perplexica/tree/master/docs/installation) for more information like updating, etc.
 
+### Importing Local PDFs
+
+If you have PDF, DOCX or TXT files stored locally and want to add them to Perplexica's knowledge base, place them in a folder (for example `pdfs/`) and run the provided helper script while the app is running:
+
+```bash
+node scripts/bulk-upload.js ./pdfs
+```
+
+Set the `EMBEDDING_PROVIDER` and `EMBEDDING_MODEL` environment variables if you want to use a specific embedding model. The script sends each file to the `/api/uploads` endpoint and saves the processed data in the `uploads/` directory.
+
 ### Ollama Connection Errors
 
 If you're encountering an Ollama connection error, it is likely due to the backend being unable to connect to Ollama's API. To fix this issue you can:
 
 1. **Check your Ollama API URL:** Ensure that the API URL is correctly set in the settings menu.
 2. **Update API URL Based on OS:**
-
    - **Windows:** Use `http://host.docker.internal:11434`
    - **Mac:** Use `http://host.docker.internal:11434`
    - **Linux:** Use `http://<private_ip_of_host>:11434`
@@ -134,7 +142,6 @@ If you're encountering an Ollama connection error, it is likely due to the backe
    Adjust the port number if you're using a different one.
 
 3. **Linux Users - Expose Ollama to Network:**
-
    - Inside `/etc/systemd/system/ollama.service`, you need to add `Environment="OLLAMA_HOST=0.0.0.0:11434"`. (Change the port number if you are using a different one.) Then reload the systemd manager configuration with `systemctl daemon-reload`, and restart Ollama by `systemctl restart ollama`. For more information see [Ollama docs](https://github.com/ollama/ollama/blob/main/docs/faq.md#setting-environment-variables-on-linux)
 
    - Ensure that the port (default is 11434) is not blocked by your firewall.
