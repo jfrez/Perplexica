@@ -1,0 +1,20 @@
+[GENERAL]
+SIMILARITY_MEASURE = "cosine"
+KEEP_ALIVE = "5m"
+
+# === CHAT MODELS ===
+[CHAT_MODEL_PROVIDERS.OLLAMA]
+API_URL = "http://host.docker.internal:11434"
+DEFAULT_MODEL = "llama3.2"
+AVAILABLE_MODELS = ["llama3.2", "mannix/jan-nano"]
+
+# === EMBEDDING MODELS ===
+[EMBEDDING_MODEL_PROVIDERS.TRANSFORMERS]
+xenova-bge-small-en-v1.5 = { displayName = "BGE Small" }
+xenova-gte-small = { displayName = "GTE Small" }
+xenova-bert-base-multilingual-uncased = { displayName = "Bert Multilingual" }
+
+# === SEARCH ENGINE (SearxNG) ===
+[SEARCH_PROVIDERS.SEARXNG]
+API_URL = "http://searxng:8080"
+
